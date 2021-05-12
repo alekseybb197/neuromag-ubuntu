@@ -43,20 +43,20 @@ sudo apt-get update
 sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 -y
 ```
 
-## 4. Usefull placement route if /opt/neuromag
+## 4. The usual way of placing neuromag software is /opt/neuromag
 
 So it should be done
 
 
 ## 5. Generation script is very ancient
 
-At first need to install usually depricated utility
+At first need to install depricated utility
 
 ```bash
 sudo apt-get install net-utils -y
 ```
 
-Patch file need for fixes old and not fully corrects operators.
+Patch file need for fixes old and incorrect statements.
 
 ```bash
 diff -Naur license_info.orig license_info
@@ -88,13 +88,13 @@ diff -Naur license_info.orig license_info
 ```
 
 
-Then need patch this script like this
+Then need apply patch to probe script like follow
 
 ```bash
 patch license_info patch.txt
 ```
 
-## 6. At all make license request
+## 6. Finally, we can make a license request
 
 ```bash
 /opt/neuromag/bin/admin/license_info
