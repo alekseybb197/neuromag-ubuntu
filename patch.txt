@@ -1,0 +1,25 @@
+--- license_info.orig	2021-04-26 09:54:07.000000000 +0300
++++ license_info	2021-05-12 16:22:27.117134625 +0300
+@@ -17,7 +17,8 @@
+ #================================================================================
+ if [ `uname` = "Linux" ] ; then
+     ifbasename=eth
+-    ifconfig="/sbin/ifconfig -a"
++    ## lol: ifconfig="/sbin/ifconfig -a"
++    ifconfig="$(which ifconfig) -a"
+     awk_extract_lanpars='{sub("addr:","",$2); sub("Bcast:","",$3); sub("Mask:","",$4); print "ipaddr[" no "]=" $2 "\nnetmask[" no "]=" $3 "\nbroadcast[" no "]=" $4}'
+
+     # Line: sed '$!N;s/\n/ /'` concatenates the lines on a single line (i.e. removes line changes)
+@@ -91,8 +92,10 @@
+     interface=$1
+     lanno=`number_part $interface`
+     if [ `uname` = 'Linux' ] ; then
+-	$ifconfig | grep -e "$interface.*HWaddr" |
+-	    awk '{apu=$1; apu=substr(apu,match(apu,"[0-9]")); $0=substr($0,match($0,"HWaddr")); gsub(":","",$2); print "macaddr[" apu "]=0x" $2}'
++	## ancient: $ifconfig | grep -e "$interface.*HWaddr" |
++        curr_mc=$($ifconfig | sed "0,/^${interface}/d" | grep '\s*ether\s' | head -n 1 | awk '{print "0x"toupper($2)}' | tr -d ':') ##'
++	## lol:    awk '{apu=$1; apu=substr(apu,match(apu,"[0-9]")); $0=substr($0,match($0,"HWaddr")); gsub(":","",$2); print "macaddr[" apu "]=0x" $2}'
++        echo macaddr[$lanno]=$curr_mc
+     else
+ 	printf "macaddr[$lanno]="
+ 	echo `/usr/sbin/lanscan | grep $interface | awk '{ print $2 }'`
