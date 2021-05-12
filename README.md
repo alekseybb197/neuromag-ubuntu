@@ -56,7 +56,7 @@ At first need to install depricated utility
 sudo apt-get install net-utils -y
 ```
 
-Patch file need for fixes old and incorrect statements.
+[Patch](https://github.com/alekseybb197/neuromag-ubuntu/blob/master/patch.txt) file need for fixes old and incorrect statements.
 
 ```bash
 diff -Naur license_info.orig license_info
